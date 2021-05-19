@@ -18,7 +18,11 @@
 #
 def triangle(a, b, c):
     # DELETE 'PASS' AND WRITE THIS CODE
-    if a == b == c:
+    if a <= 0 or b <= 0 or c <= 0:
+        raise TriangleError('Sides must have positive length')
+    elif a + b <= c or b + c <= a or c + a <= b:
+        raise TriangleError('Sum of any two sides must be greater than the third')
+    elif a == b == c:
         return 'equilateral'
     elif a != b and b != c and c != a:
         return 'scalene'
