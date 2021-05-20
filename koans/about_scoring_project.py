@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import functools
+
 from runner.koan import *
 
 # Greed is a dice game where you roll up to five dice to accumulate
@@ -34,7 +36,22 @@ from runner.koan import *
 
 def score(dice):
     # You need to write this method
-    pass
+    def inc_freq(acc, roll):
+        acc[roll] += 1
+        return acc
+
+    points = 0
+    freqs = functools.reduce(inc_freq, dice, {n:0 for n in range(1, 7)})
+
+    for i in range(1, 7):
+        if freqs[i] >= 3:
+            points += 1000 if i == 1 else i * 100
+            freqs[i] -= 3
+
+    points += 100 * freqs[1]
+    points += 50 * freqs[5]
+
+    return points
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
