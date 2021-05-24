@@ -34,7 +34,7 @@ from runner.koan import *
 #
 # Your goal is to write the score method.
 
-def score(dice):
+def score(dice, return_num_nonscoring_die=False):
     # You need to write this method
     def inc_freq(acc, roll):
         acc[roll] += 1
@@ -49,7 +49,14 @@ def score(dice):
             freqs[i] -= 3
 
     points += 100 * freqs[1]
+    freqs[1] = 0
+
     points += 50 * freqs[5]
+    freqs[5] = 0
+
+    if return_num_nonscoring_die:
+        num_nonscoring_die = sum(freqs.values())
+        return (points, num_nonscoring_die)
 
     return points
 
